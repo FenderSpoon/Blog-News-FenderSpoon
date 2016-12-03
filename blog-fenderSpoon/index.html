@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>News</title>
+    <script src="scripts/jquery-3.1.1.min.js"></script>
+    <link rel="stylesheet" href="styles/blog-styles.css">
+    <script src="scripts/blog.js"></script>
+</head>
+
+<body onload="startApp()">
+<header id="menu">
+    <a href="#" id="linkHome">Home</a>
+    <a href="#" id="linkLogin">Login</a>
+    <a href="#" id="linkRegister">Register</a>
+    <a href="#" id="linkListNews">News</a>
+    <a href="#" id="linkCreateNews">Create News</a>
+    <a href="#" id="linkLogout">Logout</a>
+    <span id="LoggedInUser"></span>
+</header>
+<section id="loadingBox">Loading ...</section>
+<section id="infoBox">Info</section>
+<section id="errorBox">Error</section>
+
+
+<main>
+    <section id="viewHome">
+        <h1>Welcome</h1>
+        Welcome to our Blog News.
+    </section>
+    <section id="viewLogin">
+        <h1>Please login</h1>
+        <form id="formLogin">
+            <div>Username:</div>
+            <div><input type="text" name="username" required /></div>
+            <div>Password:</div>
+            <div><input type="password" name="passwd" required /></div>
+            <div><input type="submit" value="Login" /></div>
+        </form>
+    </section>
+    <section id="viewRegister">
+        <h1>Please register here</h1>
+        <form id="formRegister">
+            <div>Username:</div>
+            <div><input type="text" name=
+                    "username" required /></div>
+            <div>Password:</div>
+            <div><input type="password"
+                        name="passwd" required /></div>
+            <div><input type="submit" value="Register" /></div>
+        </form>
+    </section>
+
+    <section id="viewNews">
+        <h1>News</h1>
+        <div id="news">
+            <table>
+                <tr>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Description</th>
+                    <th>Actions</th>
+                </tr>
+                <tr>
+                    <td>News title</td>
+                    <td>News author</td>
+                    <td>News description</td>
+                    <td>
+                        <a href="#">[Delete]</a>
+                        <a href="#">[Edit]</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>News title</td>
+                    <td>News author</td>
+                    <td>News description</td>
+                    <td>
+                        <a href="#">[Delete]</a>
+                        <a href="#">[Edit]</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>News title</td>
+                    <td>News author</td>
+                    <td>News description</td>
+                    <td>
+                        <a href="#">[Delete]</a>
+                        <a href="#">[Edit]</a>
+                    </td>
+                </tr>
+
+            </table>
+        </div>
+    </section>
+    <section id="viewCreateNews">
+        <h1>Create News</h1>
+        <form id="formCreateNews">
+            <div>Title:</div>
+            <div><input type="text" name="title" required /></div>
+            <div>Author:</div>
+            <div><input type="text" name="author" required /></div>
+            <div>Description:</div>
+            <div><textarea name="descr"
+                           rows="10" required></textarea></div>
+            <div><input type="submit" value="Create" /></div>
+        </form>
+    </section>
+    <section id="viewEditNews">
+        <h1>Edit existing News</h1>
+        <form id="formEditNews">
+            <div><input type="hidden" name="id" required /></div>
+            <div>Title:</div>
+            <div><input type="text" name="title" required /></div>
+            <div>Author:</div>
+            <div><input type="text" name="author" required /></div>
+            <div>Description:</div>
+            <div><textarea name="descr" rows="10"
+                           required></textarea></div>
+            <div><input type=submit value="Edit"></div>
+        </form>
+    </section>
+
+
+
+
+</main>
+
+<footer>Blog News - Simple SPA Application FenderSpoon ®</footer>
+
+</body>
+
+</html>
