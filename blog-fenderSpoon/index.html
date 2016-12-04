@@ -10,13 +10,14 @@
 
 <body onload="startApp()">
 <header id="menu">
-    <a href="#" id="linkHome">Home</a>
-    <a href="#" id="linkLogin">Login</a>
-    <a href="#" id="linkRegister">Register</a>
-    <a href="#" id="linkListNews">News</a>
-    <a href="#" id="linkCreateNews">Create News</a>
-    <a href="#" id="linkLogout">Logout</a>
-    <span id="LoggedInUser"></span>
+
+        <a href="#" id="linkHome">Home</a>
+        <a href="#" id="linkLogin">Login</a>
+        <a href="#" id="linkRegister">Register</a>
+        <a href="#" id="linkListNews">News</a>
+        <a href="#" id="linkCreateNews">Create News</a>
+        <a href="#" id="linkLogout">Logout</a>
+        <span id="LoggedInUser"></span>
 </header>
 <section id="loadingBox">Loading ...</section>
 <section id="infoBox">Info</section>
@@ -32,10 +33,10 @@
         <h1>Please login</h1>
         <form id="formLogin">
             <div>Username:</div>
-            <div><input type="text" name="username" required /></div>
+            <div><input type="text" name="username" required="true" /></div>
             <div>Password:</div>
             <div><input type="password" name="passwd" required /></div>
-            <div><input type="button" id="buttonLoginUser" value="Login" /></div>
+            <div><input type="submit" id="buttonLoginUser" value="Login" /></div>
         </form>
     </section>
     <section id="viewRegister">
@@ -46,8 +47,8 @@
                     "username" required /></div>
             <div>Password:</div>
             <div><input type="password"
-                        name="passwd" required /></div>
-            <div><input type="button" id="buttonRegisterUser" value="Register" /></div>
+                        name="passwd" required="true" /></div>
+            <div><input type="submit" id="buttonRegisterUser" value="Register" /></div>
         </form>
     </section>
 
@@ -102,7 +103,7 @@
             <div>Description:</div>
             <div><textarea name="descr"
                            rows="10" required></textarea></div>
-            <div><input type="submit" value="Create" /></div>
+            <div><input type="button"id="buttonCreateNews" value="Create" /></div>
         </form>
     </section>
     <section id="viewEditNews">

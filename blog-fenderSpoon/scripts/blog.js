@@ -12,8 +12,8 @@ function startApp() {
 
     // Bind the form submit actions
 
-    $("#buttonLoginUser").click(loginUser);
-    $("#buttonRegisterUser").click(registerUser);
+    $("#formLogin").submit(loginUser);
+    $("#formRegister").submit(registerUser);
     $("#buttonCreateNews").click(createNews);
     $("#buttonEditNews").click(editNews);
 
@@ -67,9 +67,29 @@ function startApp() {
         showView('viewHome');
 
     }
-    function loginUser() {
-      alert("xfgdfgxfgxfb");
-    }
+    function loginUser(event) {
+        event.preventDefault();
+        let userData = {
+            username: $('#formLogin input[name=username]').val(),
+            password: $('#formLogin input[name=passwd]').val()
+        };
+        $.ajax({
+            method: "POST",
+            url: kinveyBaseUrl + "user/" + kinveyAppKey + "/login",
+            headers: kinveyAppAuthHeaders,
+            data: userData,
+            success: loginSuccess,
+            error: handleAjaxError
+        });
+
+        function loginSuccess(userInfo) {
+            saveAuthInSession(userInfo);
+            showHideMenuLinks();
+            listNews();
+            showInfo('Login successful.');
+        }
+
+          }
     function showLoginView() {
         showView("viewLogin");
         $("#formLogin").trigger('reset');
@@ -80,9 +100,71 @@ function startApp() {
         showView('viewRegister');
     }
 
-    function listNews() {
+    function getKinveyUserAuthHeaders() {
+        return {
+            'Authorization': "Kinvey " +
+            sessionStorage.getItem('authToken'),
+        };
 
     }
+
+    function listNews() {
+        $('#news').empty();
+        showView('viewNews');
+        $.ajax({
+            method: "GET",
+            url: kinveyBaseUrl + "appdata/" + kinveyAppKey + "/News",
+            headers: getKinveyUserAuthHeaders(),
+            success: loadNewsSuccess,
+            error: handleAjaxError
+        });
+        function loadNewsSuccess(news) {
+            let table = $(`
+              <table>
+                <tr>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Description</th>
+                    <th>Actions</th>
+                </tr>
+                 </table>`);
+
+            for (let n of news){
+                let tr = $('<tr>');
+            displayTableRow(tr, n);
+            tr.appendTo(table);
+        }
+            $("#news").append(table)
+        }
+        function displayTableRow(tr,n) {
+            let links = [];
+            let deleteLink = $("<a href ='#'>[Delete]</a>")
+            .click(function () {deleteNewsById(n._id)});
+            let editLink = $("<a href ='#'>[Edit]</a>");
+            links.push(deleteLink);
+            links.push(" ");
+            links.push(editLink);
+            tr.append(
+                $('<td>').text(n.title),
+                $('<td>').text(n.author),
+                $('<td>').text(n.description),
+                $('<td>').append(links)
+            );
+        }
+    }
+      function deleteNewsById(nId) {
+          $.ajax({
+              method: "DELETE",
+              url: kinveyBaseUrl + "appdata/" + kinveyAppKey + "/News/" + nId,
+              headers: getKinveyUserAuthHeaders(),
+              success: deleteNewsSuccess,
+              error: handleAjaxError
+          });
+          function deleteNewsSuccess() {
+              showInfo("News deleted");
+              listNews();
+          }
+      }
     function showCreateNewsView() {
         $('#formCreateNews').trigger('reset');
         showView('viewCreateNews');
@@ -90,9 +172,15 @@ function startApp() {
 
     }
     function logoutUser() {
-
+        sessionStorage.clear();
+        $('#LoggedInUser').text("");
+        showHideMenuLinks();
+        showView('viewHome');
+        showInfo('Logout successful.');
     }
-    function registerUser() {
+
+    function registerUser(event) {
+        event.preventDefault();
         let userData = {
             username: $('#formRegister input[name=username]').val(),
             password: $('#formRegister input[name=passwd]').val()
@@ -148,8 +236,25 @@ function startApp() {
 
 
     function createNews() {
-
+        let newsData = {
+            title: $('#formCreateNews input[name=title]').val(),
+            author: $('#formCreateNews input[name=author]').val(),
+            description: $('#formCreateNews textarea[name=descr]').val()
+        };
+        $.ajax({
+            method: "POST",
+            url: kinveyBaseUrl + "appdata/" + kinveyAppKey + "/News",
+            headers: getKinveyUserAuthHeaders(),
+            data:newsData,
+            success: createNewsSuccess,
+            error: handleAjaxError
+        });
+        function createNewsSuccess() {
+            showInfo("News created");
+            listNews();
+        }
     }
+
     function editNews() {
 
     }
