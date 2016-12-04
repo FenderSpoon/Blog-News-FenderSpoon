@@ -34,8 +34,7 @@ function startApp() {
     const kinveyAppSecret =
         "c4e4cab01de343d7a6d73fa78d3a7c29";
     const kinveyAppAuthHeaders = {
-        'Authorization': "Basic " +
-        btoa(kinveyAppKey + ":" + kinveyAppSecret),
+        'Authorization': "Basic " + btoa(kinveyAppKey + ":" + kinveyAppSecret),
     };
 
     function showHideMenuLinks() {
@@ -69,11 +68,11 @@ function startApp() {
 
     }
     function loginUser() {
-
+      alert("xfgdfgxfgxfb");
     }
     function showLoginView() {
-        showView('viewLogin');
-        $('#formLogin').trigger('reset');
+        showView("viewLogin");
+        $("#formLogin").trigger('reset');
     }
 
     function showRegisterView() {
@@ -94,22 +93,59 @@ function startApp() {
 
     }
     function registerUser() {
-
         let userData = {
             username: $('#formRegister input[name=username]').val(),
             password: $('#formRegister input[name=passwd]').val()
-
         };
-        console.dir(userData);
+        $.ajax({
+            method: "POST",
+            url: kinveyBaseUrl + "user/" + kinveyAppKey + "/",
+            headers: kinveyAppAuthHeaders,
+            data: userData,
+            success: registerSuccess,
+            error: handleAjaxError
+        });
 
-
-        function registerSuccess() {
-            alert("success")
+        function registerSuccess(userInfo) {
+            saveAuthInSession(userInfo);
+            showHideMenuLinks();
+            listNews();
+            showInfo('User registration successful.');
         }
+
+
     }
-    function handleAjaxError() {
-        alert("error")
+     function saveAuthInSession(userInfo) {
+         sessionStorage.setItem("username",userInfo.username);
+         sessionStorage.setItem("authToken",userInfo._kmd.authtoken);
+         $("#LoggedInUser").text("Welcome, "+ userInfo.username);
+         listNews();
+
+     }
+     function showInfo(message) {
+         $('#infoBox').text(message);
+         $('#infoBox').show();
+         setTimeout(function() {
+             $('#infoBox').fadeOut();
+         }, 3000);
+
+     }
+
+
+    function handleAjaxError(response) {
+         let errorMsq = JSON.stringify(response);
+         if(response.readyState === 0)
+             errorMsq = "Cannot connect due to network error";
+         if(response.responseJSON &&
+             response.responseJSON.description)
+             errorMsq = response.responseJSON.description;
+         showError(errorMsq);
     }
+    function showError(errorMsg) {
+        $('#errorBox').text("Error: " + errorMsg);
+        $('#errorBox').show();
+    }
+
 
     function createNews() {
 
