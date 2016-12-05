@@ -109,8 +109,9 @@ function startApp() {
     }
 
     function listNews() {
-        $('#news').empty();
         showView('viewNews');
+        $('#news').empty();
+
         $.ajax({
             method: "GET",
             url: kinveyBaseUrl + "appdata/" + kinveyAppKey + "/News",
@@ -118,6 +119,7 @@ function startApp() {
             success: loadNewsSuccess,
             error: handleAjaxError
         });
+
         function loadNewsSuccess(news) {
            let table = $(`
               <table>
@@ -132,6 +134,7 @@ function startApp() {
             for (let n of news){
                 let tr = $('<tr>');
             displayTableRow(tr, n);
+                $('#news').empty();
             tr.appendTo(table);
         }
             $("#news").append(table)
