@@ -121,7 +121,7 @@ function startApp() {
         });
 
         function loadNewsSuccess(news) {
-            let table = $(`
+           let table = $(`
               <table>
                 <tr>
                     <th>Title</th>
