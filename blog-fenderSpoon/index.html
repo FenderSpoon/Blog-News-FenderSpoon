@@ -120,7 +120,19 @@
             <div>Description:</div>
             <div><textarea name="descr" rows="10"
                            required></textarea></div>
-            <div><input type=submit value="Edit"></div>
+            <div><input type=button id="buttonEditNews" value="Edit"></div>
+        </form>
+    </section>
+
+    <section id="viewReadNews">
+        <h1>News full description</h1>
+        <form id="formReadNews">
+            <div><input type="hidden" name="id" required /></div>
+
+            <div>Description:</div>
+            <div><textarea readonly="readonly" name="descr" rows="10"
+                           required></textarea></div>
+
         </form>
     </section>
 
