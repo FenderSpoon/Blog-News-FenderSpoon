@@ -282,8 +282,9 @@ function startApp() {
             error: handleAjaxError
         });
         function editNewsSuccess() {
-            showInfo("News edited");
             listNews();
+            showInfo("News edited");
+
         }
     }
 
@@ -291,18 +292,16 @@ function startApp() {
         $.ajax({
             method: "GET",
             url: kinveyBookUrl = kinveyBaseUrl + "appdata/" +
-                kinveyAppKey + "/News/" + nId,
+                kinveyAppKey + "/News/" +nId,
             headers: getKinveyUserAuthHeaders(),
             success: loadNewsForEditSuccess,
             error: handleAjaxError
         });
         function loadNewsForEditSuccess(nId) {
-            $('#formEditNews input[name=id]').val(nId);
+            $('#formEditNews input[name=id]').val(nId._id);
             $('#formEditNews input[name=title]').val(nId.title);
-            $('#formEditNews input[name=author]')
-                .val(nId.author);
-            $('#formEditNews textarea[name=descr]')
-                .val(nId.description);
+            $('#formEditNews input[name=author]').val(nId.author);
+            $('#formEditNews textarea[name=descr]').val(nId.description);
             showView('viewEditNews');
         }
     }
@@ -312,10 +311,10 @@ function startApp() {
             url: kinveyBookUrl = kinveyBaseUrl + "appdata/" +
                 kinveyAppKey + "/News/" + nId,
             headers: getKinveyUserAuthHeaders(),
-            success: loadNewsForEditSuccess,
+            success: loadNewsForReadSuccess,
             error: handleAjaxError
         });
-        function loadNewsForEditSuccess(nId) {
+        function loadNewsForReadSuccess(nId) {
             $('#formReadNews input[name=id]').val(nId);
             $('#formReadNews textarea[name=descr]')
                 .val(nId.description);
