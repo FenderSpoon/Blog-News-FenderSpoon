@@ -119,7 +119,7 @@ function startApp() {
             error: handleAjaxError
         });
         function loadNewsSuccess(news) {
-            let table = $(`
+           let table = $(`
               <table>
                 <tr>
                     <th>Title</th>
