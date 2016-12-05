@@ -141,12 +141,19 @@ function startApp() {
         }
         function displayTableRow(tr,n) {
             let links = [];
+            if(n._acl.creator == sessionStorage.getItem("userId")){
             let deleteLink = $("<a href ='#'>[Delete]</a>")
             .click(function () {deleteNewsById(n._id)});
-            let editLink = $("<a href ='#'>[Edit]</a>");
+            let editLink = $("<a href ='#'>[Edit]</a>")
+                .click(function () {loadNewsForEdit(n._id)});
             links.push(deleteLink);
             links.push(" ");
             links.push(editLink);
+            }
+            let readLink = $("<a href ='#'>[Read]</a>")
+                .click(function () {loadNewsForRead(n._id)});
+            links.push(" ");
+            links.push(readLink);
             tr.append(
                 $('<td>').text(n.title),
                 $('<td>').text(n.author),
@@ -209,6 +216,7 @@ function startApp() {
      function saveAuthInSession(userInfo) {
          sessionStorage.setItem("username",userInfo.username);
          sessionStorage.setItem("authToken",userInfo._kmd.authtoken);
+         sessionStorage.setItem("userId",userInfo._id);
          $("#LoggedInUser").text("Welcome, "+ userInfo.username);
          listNews();
 
@@ -259,7 +267,62 @@ function startApp() {
     }
 
     function editNews() {
+        let newsData = {
+            title: $('#formEditNews input[name=title]').val(),
+            author: $('#formEditNews input[name=author]').val(),
+            description: $('#formEditNews textarea[name=descr]').val()
+        };
+        $.ajax({
+            method: "PUT",
+            url: kinveyBaseUrl + "appdata/" + kinveyAppKey + "/News/" +
+            $('#formEditNews input[name=id]').val(),
+            headers: getKinveyUserAuthHeaders(),
+            data:newsData,
+            success: editNewsSuccess,
+            error: handleAjaxError
+        });
+        function editNewsSuccess() {
+            showInfo("News edited");
+            listNews();
+        }
+    }
+
+    function loadNewsForEdit(nId) {
+        $.ajax({
+            method: "GET",
+            url: kinveyBookUrl = kinveyBaseUrl + "appdata/" +
+                kinveyAppKey + "/News/" + nId,
+            headers: getKinveyUserAuthHeaders(),
+            success: loadNewsForEditSuccess,
+            error: handleAjaxError
+        });
+        function loadNewsForEditSuccess(nId) {
+            $('#formEditNews input[name=id]').val(nId);
+            $('#formEditNews input[name=title]').val(nId.title);
+            $('#formEditNews input[name=author]')
+                .val(nId.author);
+            $('#formEditNews textarea[name=descr]')
+                .val(nId.description);
+            showView('viewEditNews');
+        }
+    }
+    function loadNewsForRead(nId) {
+        $.ajax({
+            method: "GET",
+            url: kinveyBookUrl = kinveyBaseUrl + "appdata/" +
+                kinveyAppKey + "/News/" + nId,
+            headers: getKinveyUserAuthHeaders(),
+            success: loadNewsForEditSuccess,
+            error: handleAjaxError
+        });
+        function loadNewsForEditSuccess(nId) {
+            $('#formReadNews input[name=id]').val(nId);
+            $('#formReadNews textarea[name=descr]')
+                .val(nId.description);
+            showView('viewReadNews');
+        }
+    }
+
 
     }
-}
 
