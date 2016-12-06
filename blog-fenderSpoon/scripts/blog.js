@@ -112,6 +112,10 @@ function startApp() {
         showView('viewNews');
         $('#news').empty();
 
+
+
+
+
         $.ajax({
             method: "GET",
             url: kinveyBaseUrl + "appdata/" + kinveyAppKey + "/News",
@@ -178,6 +182,7 @@ function startApp() {
     function showCreateNewsView() {
         $('#formCreateNews').trigger('reset');
         showView('viewCreateNews');
+
 
 
     }
@@ -251,6 +256,7 @@ function startApp() {
             title: $('#formCreateNews input[name=title]').val(),
             author: $('#formCreateNews input[name=author]').val(),
             description: $('#formCreateNews textarea[name=descr]').val()
+
         };
         $.ajax({
             method: "POST",
