@@ -27,7 +27,8 @@
 
 <main>
     <section id="viewHome">
-        <h1 id="text">Welcome</h1>
+
+        <div class="marquee">Welcome To Our Blog News</div>
 
 
         <img src="photos-library/News-media-standards.jpg" height="100%" width="100%"/></section>
@@ -51,7 +52,7 @@
             <div>Password:</div>
             <div><input type="password"
                         name="passwd" required="true" /></div>
-            <div><input type="submit" id="buttonRegisterUser" value="Register" /></div>
+            <div><input type="submit"  value="Register" /></div>
         </form>
     </section>
 
@@ -102,10 +103,10 @@
             <div>Title:</div>
             <div><input type="text" name="title" required /></div>
             <div>Author:</div>
-            <div><input type="text" name="author" required /></div>
+            <div><input type="text"  name="author" required /></div>
             <div>Description:</div>
             <div><textarea name="descr"
-                           rows="10" required></textarea></div>
+                            required></textarea></div>
             <div><input type="button"id="buttonCreateNews" value="Create" /></div>
         </form>
     </section>
@@ -129,8 +130,8 @@
         <form id="formReadNews">
             <div><input type="hidden" name="id" required /></div>
 
-            <div>Description:</div>
-            <div><textarea readonly="readonly" name="descr" rows="10"
+
+            <div><textarea id="mytext" readonly="readonly" name="descr" rows="10"
                            required></textarea></div>
 
         </form>

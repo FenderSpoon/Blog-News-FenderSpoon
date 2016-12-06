@@ -38,11 +38,14 @@ section h1 {
 table th {
     background: #DDD;
     padding: 10px;
+
 }
 
 table td {
     padding: 5px 10px;
     background: #EEE;
+
+
 }
 #infoBox, #errorBox, #loadingBox {
     display: none;
@@ -93,9 +96,25 @@ footer {
     text-align: center;
     border-radius: 3px;
 }
-textarea{
+#mytext{
     border:1px solid #999999;
     width: 100%;
     margin: 5px 0;
     padding: 3px;
 }
+.marquee {
+    position: absolute;
+    white-space: nowrap;
+    font-family:"Microsoft YaHei Light";
+    font-weight: bold;
+    font-size: 120%;
+    -webkit-animation: rightThenLeft 6s linear;
+}
+
+@-webkit-keyframes rightThenLeft {
+    0%   {left: 0%;}
+    50%  {left: 100%;}
+    100% {left: 0%;}
+}
+
+
